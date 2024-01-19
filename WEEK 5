@@ -1,0 +1,21 @@
+pip install requests
+import requests
+respone=requests.get("https://en.wikipedia.org/robots.txt")
+test=respone.text
+print("robots.txt for https://en.wikipedia.org/")
+print("=========================================")
+print(test.encode("utf-8"))
+import requests
+url="https://en.wikipedia.org/robots.txt"
+try:
+    response=requests.get(url)
+    if response.status_code==200:
+        with open("robots.txt","w",encoding="utf-8") as file:
+            file.write(response.text)
+            print("Content of robots.txt from en.wikipedia.org")
+            print(response.text)
+            print("robots.txt downloaded successfully and saved as 'robots.txt'")
+    else:
+            print(f"Failed to retrieve robots.txt.status code:{response.status_code}")
+except requests.exceptions.RequestExpection as e:
+               print(f"An error occured:{e}")
