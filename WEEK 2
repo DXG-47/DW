@@ -1,0 +1,12 @@
+pip install NLTk
+from pdfminer.high_level import extract_text
+from nltk.tokenize import RegexpTokenizer
+from nltk.probability import FreqDist
+#Extract the text from pdffile
+text=extract_text("2010.00462.pdf")
+print(text)
+tokenizer=RegexpTokenizer("\w+")
+tokens=tokenizer.tokenize(text)
+freqdist=FreqDist(tokens)
+long_freq_words=[words for words in tokens if len(words)>10 and freqdist[words]>20]
+FreqDist(long_freq_words).plot()
