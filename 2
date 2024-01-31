@@ -1,0 +1,50 @@
+import pandas as pd
+cl= pd.read_csv('National Child Labour.csv')
+cl
+cl.shape
+cm= pd.read_csv('Child Marriage.csv')
+cm
+
+cm.shape
+
+cl.isnull().sum()
+
+cm.isnull().sum()
+
+#to remove missing values from data
+cl=cl.dropna()
+cl.duplicated().sum()
+cm.duplicated().sum()
+cm['Male Married by 18'].duplicated().sum()
+cm.loc[cm.duplicated()]
+cl = cl.drop_duplicates()
+cm=cm.drop_duplicates()
+cl.shape
+cl=cl.rename(columns={'Country Name':'Country'})
+cl.columns
+
+cm.isnull().sum()
+cm['Female Married by 18']=cm['Female Married by 18'].fillna(value=0)
+cm.tail(30)
+
+cm['Reference year']=cm['Reference year'].fillna(method='ffill')
+cm.tail(30)
+cm['Male Married by 18']=cm['Male Married by 18'].fillna(method='bfill')
+cm.tail(30)
+cm=cm.dropna()
+cl[cl['Country Code']=='AND']
+cl=cl.drop(cl[cl['Country Code']=='AND'].index)
+new=pd.concat([cl,cm],axis=1)
+cl.head()
+new2=new.merge(cl,indicator=True,how='outer')
+new2
+#to remove line breaks columnswise
+cl['Country'] = cl['Country'].str.replace('\n', ' ')
+#to remove line breaks row-wise
+cl.replace('\n','',regex=True)
+#to display whitespaces
+cm['Data source']=cm['Data source'].str.replace(' ','')
+#to remove special characters from columns
+cm['Female Married by 15'] = cm['Female Married by 15'].str.replace(r'\W', '', regex=True)
+cm.head(20)
+cm[cm['Female Married by 15'] == '1']
